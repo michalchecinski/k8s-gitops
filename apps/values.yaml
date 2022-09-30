@@ -2,5 +2,5 @@ spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    repoURL: https://github.com/michalchecinski/k8s-gitops
+    repoURL: https://github.com/michalchecinski/k8s-gitops.git
     targetRevision: HEAD
