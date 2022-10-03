@@ -19,6 +19,9 @@ spec:
         installCRDs: true
         prometheus:
           enabled: false
+        ingressShim:
+          defaultIssuerName: prod-issuer
+          defaultIssuerKind: OriginIssuer
   syncPolicy:
     automated:
       prune: true
