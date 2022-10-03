@@ -7,10 +7,18 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: argocd
+    namespace: cert-manager
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: guestbook
-    repoURL: https://github.com/argoproj/argocd-example-apps
-    targetRevision: HEAD
+    repoURL: 'https://charts.jetstack.io'
+    chart: cert-manager
+    targetRevision: v1.9.1
+    helm:
+      values: |
+        installCRDs: true
+syncPolicy:
+  automated:
+    prune: true
+  syncOptions:
+    - CreateNamespace=true
