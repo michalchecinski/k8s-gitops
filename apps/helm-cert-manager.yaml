@@ -19,8 +19,8 @@ spec:
         installCRDs: true
         prometheus:
           enabled: false
-syncPolicy:
-  automated:
-    prune: true
-  syncOptions:
-    - CreateNamespace=true
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
