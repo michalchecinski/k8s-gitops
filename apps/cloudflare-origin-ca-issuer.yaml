@@ -5,6 +5,9 @@ metadata:
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: cloudflare/origin-ca-issuer
+    argocd-image-updater.argoproj.io/write-back-method: git
 spec:
   destination:
     namespace: cert-manager
