@@ -8,6 +8,7 @@ spec:
   secretName: checinski-xyz-tls
   dnsNames:
     - checinski.xyz
+    - argocd.checinski.xyz
   # Duration of the certificate
   duration: 168h
   # Renew a day before the certificate expiration
