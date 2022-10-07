@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     chart: kube-prometheus-stack
-    repoURL: https://grafana.github.io/helm-charts
+    repoURL: https://prometheus-community.github.io/helm-charts
     targetRevision: 40.5.0
     helm:
       releaseName: kube-prometheus-stack
