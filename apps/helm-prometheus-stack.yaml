@@ -1,0 +1,67 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    chart: kube-prometheus-stack
+    repoURL: https://grafana.github.io/helm-charts
+    targetRevision: 40.5.0
+    helm:
+      releaseName: kube-prometheus-stack
+      values:
+        grafana:
+          enabled: false
+          forceDeployDashboards: true
+        prometheus:
+          ingress:
+            enabled: true
+            pathType: Prefix
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt
+              kubernetes.io/ingress.class: traefik
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              traefik.ingress.kubernetes.io/router.tls: "true"
+              kubernetes.io/tls-acme: 'true'
+            hosts:
+              - prom-server.checinski.xyz
+            tls:
+              - hosts:
+                - prom-server.checinski.xyz
+                secretName: prom-server-checinski-xyz-tls
+        alertmanager:
+          alertmanagerSpec:
+            storage:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: longhorn
+                  resources:
+                    requests:
+                      storage: 500Mi
+          ingress:
+            enabled: true
+            pathType: Prefix
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt
+              kubernetes.io/ingress.class: traefik
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
+              traefik.ingress.kubernetes.io/router.tls: "true"
+              kubernetes.io/tls-acme: 'true'
+            hosts:
+              - prom-alert.checinski.xyz
+            tls:
+            - hosts:
+              - prom-alert.checinski.xyz
+              secretName: prom-alert-checinski-xyz-tls
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-prometheus-stack
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
