@@ -13,7 +13,7 @@ spec:
     targetRevision: 6.40.1
     helm:
       releaseName: grafana
-      values:
+      values: |
         podAnnotations:
           configmap.reloader.stakater.com/reload: "grafana"
         persistence:

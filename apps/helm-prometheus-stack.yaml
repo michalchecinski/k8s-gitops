@@ -13,7 +13,7 @@ spec:
     targetRevision: 40.5.0
     helm:
       releaseName: kube-prometheus-stack
-      values:
+      values: |
         grafana:
           enabled: false
           forceDeployDashboards: true
