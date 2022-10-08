@@ -36,30 +36,6 @@ spec:
               - hosts:
                 - prom-server.checinski.xyz
                 secretName: prom-server-checinski-xyz-tls
-        alertmanager:
-          alertmanagerSpec:
-            storage:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: longhorn
-                  resources:
-                    requests:
-                      storage: 500Mi
-          ingress:
-            enabled: true
-            pathType: Prefix
-            annotations:
-              cert-manager.io/cluster-issuer: letsencrypt
-              kubernetes.io/ingress.class: traefik
-              traefik.ingress.kubernetes.io/router.entrypoints: websecure
-              traefik.ingress.kubernetes.io/router.tls: "true"
-              kubernetes.io/tls-acme: 'true'
-            hosts:
-              - prom-alert.checinski.xyz
-            tls:
-            - hosts:
-              - prom-alert.checinski.xyz
-              secretName: prom-alert-checinski-xyz-tls
   destination:
     server: "https://kubernetes.default.svc"
     namespace: kube-prometheus-stack
