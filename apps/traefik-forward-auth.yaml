@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik-forward-auth
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  destination:
+    namespace: traefik-forward-auth
+    server: "https://kubernetes.default.svc"
+  source:
+    repoURL: 'https://github.com/michalchecinski/k8s-gitops.git'
+    path: traefik-forward-auth
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-forward-auth
+  labels:
+    app: traefik
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    kubernetes.io/tls-acme: 'true'
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: traefik-forward-auth
+            port:
+              number: 4181
+    host: auth.checinski.xyz
+  tls:
+    - hosts:
+        - auth.checinski.xyz
+      secretName: auth-checinski-xyz-tls

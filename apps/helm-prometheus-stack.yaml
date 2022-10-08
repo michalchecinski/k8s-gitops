@@ -25,6 +25,7 @@ spec:
             enabled: true
             pathType: Prefix
             annotations:
+              traefik.ingress.kubernetes.io/router.middlewares: traefik-forward-auth-traefik-forward-auth@kubernetescrd
               cert-manager.io/cluster-issuer: letsencrypt
               kubernetes.io/ingress.class: traefik
               traefik.ingress.kubernetes.io/router.entrypoints: websecure
