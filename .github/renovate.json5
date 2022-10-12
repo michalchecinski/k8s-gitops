@@ -6,9 +6,7 @@
     ":dependencyDashboard",
     ":semanticCommits",
     ":enablePreCommit",
-    ":automergeDigest",
-    ":automergeBranchPush",
-    "docker:pinDigests"
+    ":automergeBranchPush"
   ],
   "enabled": true,
   "timezone": "Europe/Warsaw",
@@ -77,23 +75,8 @@
       "packageNames": [
         "homeassistant/home-assistant",
         "koenkk/zigbee2mqtt",
-        "esphome/esphome"
-      ]
-    },
-    // auto-updates - weekly
-    {
-      "datasources": [
-        "helm"
-      ],
-      "automerge": true,
-      "requiredStatusChecks": null,
-      "schedule": "after 1am and before 5am",
-      "updateTypes": [
-        "minor",
-        "patch"
-      ],
-      "packageNames": [
-        "grafana"
+        "esphome/esphome",
+        "eclipse-mosquitto"
       ]
     },
     {
