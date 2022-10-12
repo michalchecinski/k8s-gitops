@@ -9,8 +9,8 @@
       ":automergeDigest",
       ":automergeBranchPush",
       "docker:pinDigests",
-      "github>michalchecinski/k8s-gitops//.github/renovate/autoMerge.json5",
-      "github>michalchecinski/k8s-gitops//.github/renovate/disabledDatasources.json5"
+      "github>michalchecinski/k8s-gitops/.github/renovate/autoMerge.json5",
+      "github>michalchecinski/k8s-gitops/.github/renovate/disabledDatasources.json5"
     ],
     "enabled": true,
     "timezone": "Europe/Warsaw",
