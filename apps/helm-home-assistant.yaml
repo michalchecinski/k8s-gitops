@@ -1,0 +1,118 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: home-assistant
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    chart: home-assistant
+    repoURL: https://k8s-at-home.com/charts/
+    targetRevision: 13.4.2
+    helm:
+      releaseName: home-assistant
+      values: |
+        image:
+          repository: homeassistant/home-assistant
+          tag: 2022.10.3
+        env:
+          TZ: "Europe/Warsaw"
+        hostNetwork: true
+        dnsPolicy: ClusterFirstWithHostNet
+        service:
+          main:
+            type: LoadBalancer
+            loadBalancerIP: 192.168.1.210
+        ingress:
+          main:
+            enabled: true
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
+              traefik.ingress.kubernetes.io/router.tls: 'true'
+            hosts:
+            - host: hass-k8s.checinski.xyz
+              paths:
+              - path: /
+                pathType: Prefix
+            tls:
+            - hosts:
+              - "hass-k8s.checinski.xyz"
+              secretName: hass-k8s-checinski-xyz-tls
+        prometheus:
+          serviceMonitor:
+            enabled: false
+        probes:
+          liveness:
+            enabled: false
+          readiness:
+            enabled: false
+          startup:
+            enabled: true
+        persistence:
+          config:
+            enabled: true
+            storageClass: "home-assistant"
+            accessMode: ReadWriteOnce
+            size: "5Gi"
+        addons:
+          codeserver:
+            enabled: true
+            image:
+              repository: codercom/code-server
+              tag: 4.7.1
+            workingDir: "/config"
+            args:
+              - --user-data-dir
+              - "/config/.vscode"
+              # - --auth
+              # - "none"
+            ingress:
+              enabled: true
+              annotations:
+                traefik.ingress.kubernetes.io/router.entrypoints: 'websecure'
+                traefik.ingress.kubernetes.io/router.tls: 'true'
+              hosts:
+              - host: hass-vscode.checinski.xyz
+                paths:
+                - path: /
+                  pathType: Prefix
+              tls:
+              - hosts:
+                - hass-vscode.checinski.xyz
+                secretName: hass-vscode-checinski-xyz-tls
+            volumeMounts:
+            - name: config
+              mountPath: /config
+        postgresql:
+          enabled: true
+          image:
+            repository: postgres
+            tag: '14.1'
+          auth:
+            enablePostgresUser: false
+            username: home-assistant
+            database: home-assistant
+          postgresqlDataDir: "/data/pgdata"
+          shmVolume:
+            enabled: false
+          volumePermissions:
+            enabled: false
+          primary:
+            persistence:
+              enabled: true
+              storageClass: "home-assistant"
+              size: 1Gi
+              mountPath: "/data/"
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: hass
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
