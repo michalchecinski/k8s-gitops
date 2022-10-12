@@ -4,7 +4,6 @@ metadata:
   labels:
     app: esphome
   name: esphome
-  namespace: homeassistant
 spec:
   replicas: 1
   selector:
