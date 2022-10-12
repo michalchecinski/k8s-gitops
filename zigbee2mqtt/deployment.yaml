@@ -74,7 +74,7 @@ spec:
             path: /run/udev
         - name: ttyacm
           hostPath:
-            path: /dev/ttyACM0
+            path: /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_2e8bb2320645ec11b0fc96fd6f14af06-if00-port0
         - name: zigbee2mqtt-config
           configMap:
             name: zigbee2mqtt-config
