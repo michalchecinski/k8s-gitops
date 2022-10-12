@@ -14,7 +14,6 @@ spec:
         app.kubernetes.io/name: mosquitto
         app.kubernetes.io/instance: mosquitto
     spec:
-      serviceAccountName: mosquitto
       containers:
         - name: mosquitto
           image: eclipse-mosquitto:1.6.10
