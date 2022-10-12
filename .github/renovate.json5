@@ -1,102 +1,207 @@
 {
-    "extends": [
-      "config:base",
-      "docker:enableMajor",
-      ":disableRateLimiting",
-      ":dependencyDashboard",
-      ":semanticCommits",
-      ":enablePreCommit",
-      ":automergeDigest",
-      ":automergeBranchPush",
-      "docker:pinDigests",
-      "github>michalchecinski/k8s-gitops/.github/renovate/autoMerge.json5",
-      "github>michalchecinski/k8s-gitops/.github/renovate/disabledDatasources.json5"
+  "extends": [
+    "config:base",
+    "docker:enableMajor",
+    ":disableRateLimiting",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":enablePreCommit",
+    ":automergeDigest",
+    ":automergeBranchPush",
+    "docker:pinDigests"
+  ],
+  "enabled": true,
+  "timezone": "Europe/Warsaw",
+  "semanticCommits": "enabled",
+  "platform": "github",
+  "gitAuthor": "Michal Checinski <michalchecinski@users.noreply.github.com>",
+  "repositories": [
+    "michalchecinski/k8s-gitops"
+  ],
+  "onboarding": false,
+  "requireConfig": "optional",
+  "commitBodyTable": true,
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Renovate Dashboard",
+  "commitBody": "Signed-off-by: Michal Checinski <michalchecinski@users.noreply.github.com>",
+  "suppressNotifications": [
+    "prIgnoreNotification"
+  ],
+  "rebaseWhen": "conflicted",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{newVersion}}",
+  "commitMessageSuffix": "",
+  "helm-values": {
+    "fileMatch": [
+      "./.+\\.yaml$"
+    ]
+  },
+  "argocd": {
+    "fileMatch": [
+      "apps/.+\\.yaml$"
+    ]
+  },
+  "kubernetes": {
+    "fileMatch": [
+      "\\.yaml$"
     ],
-    "enabled": true,
-    "timezone": "Europe/Warsaw",
-    "semanticCommits": "enabled",
-    "platform": "github",
-    "gitAuthor": "Michal Checinski <michalchecinski@users.noreply.github.com>",
-    "repositories": ["michalchecinski/k8s-gitops"],
-    "onboarding": false,
-    "requireConfig": "optional",
-    "commitBodyTable": true,
-    "dependencyDashboard": true,
-    "dependencyDashboardTitle": "Renovate Dashboard",
-    "commitBody": "Signed-off-by: Michal Checinski <michalchecinski@users.noreply.github.com>",
-    "suppressNotifications": ["prIgnoreNotification"],
-    "rebaseWhen": "conflicted",
-    "commitMessageTopic": "{{depName}}",
-    "commitMessageExtra": "to {{newVersion}}",
-    "commitMessageSuffix": "",
-    "helm-values": {
-      "fileMatch": ["./.+\\.yaml$"]
+    "ignorePaths": [
+      "apps/",
+      ".github"
+    ]
+  },
+  "packageRules": [
+    {
+      "description": "Disable kubernetes-api",
+      "matchManagers": [
+        "kubernetes"
+      ],
+      "matchDatasources": [
+        "kubernetes-api"
+      ],
+      "enabled": false
     },
-    "argocd": {
-        "fileMatch": ["apps/.+\\.yaml$"]
-    },
-    "kubernetes": {
-      "fileMatch": ["\\.yaml$"],
-      "ignorePaths": [
-        "apps/",
-        ".github"
+    // auto-updates - daily
+    {
+      "datasources": [
+        "docker"
+      ],
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "schedule": "after 1am and before 5am",
+      "updateTypes": [
+        "minor",
+        "patch"
+      ],
+      "packageNames": [
+        "homeassistant/home-assistant",
+        "koenkk/zigbee2mqtt",
+        "esphome/esphome"
       ]
     },
-    "packageRules": [
-      {
-        "datasources": ["helm"],
-        "commitMessageTopic": "Helm chart {{depName}}",
-        "semanticCommitScope": "charts",
-        "separateMinorPatch": true,
-        "ignoreDeprecated": true
-      },
-      {
-        "datasources": ["docker"],
-        "commitMessageTopic": "Docker image {{depName}}",
-        "commitMessageExtra": "to {{#if isSingleVersion}}{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}",
-        "updateTypes": ["major", "minor", "patch"],
-        "enabled": true
-      },
-      {
-        "matchDatasources": ["docker"],
-        "semanticCommitScope": "images",
-        "separateMinorPatch": true
-      },
-      {
-        "matchDatasources": ["docker"],
-        "matchUpdateTypes": ["major"],
-        "commitMessagePrefix": "feat(images)!: ",
-        "labels": ["renovate/image", "dep/major"]
-      },
-      {
-        "matchDatasources": ["docker"],
-        "matchUpdateTypes": ["minor"],
-        "semanticCommitType": "feat",
-        "labels": ["renovate/image", "dep/minor"]
-      },
-      {
-        "matchDatasources": ["docker"],
-        "matchUpdateTypes": ["patch"],
-        "semanticCommitType": "fix",
-        "labels": ["renovate/image", "dep/patch"]
-      },
-      {
-        "matchDatasources": ["helm"],
-        "matchUpdateTypes": ["major"],
-        "commitMessagePrefix": "feat(charts)!: ",
-        "labels": ["renovate/helm", "dep/major"]
-      },
-      {
-        "matchDatasources": ["helm"],
-        "matchUpdateTypes": ["minor"],
-        "semanticCommitType": "feat",
-        "labels": ["renovate/helm", "dep/minor"]
-      },
-      {
-        "matchDatasources": ["helm"],
-        "matchUpdateTypes": ["patch"],
-        "semanticCommitType": "fix",
-        "labels": ["renovate/helm", "dep/patch"]
-      }
-    ]
-  }
+    // auto-updates - weekly
+    {
+      "datasources": [
+        "helm"
+      ],
+      "automerge": true,
+      "requiredStatusChecks": null,
+      "schedule": "after 1am and before 5am",
+      "updateTypes": [
+        "minor",
+        "patch"
+      ],
+      "packageNames": [
+        "grafana"
+      ]
+    },
+    {
+      "datasources": [
+        "helm"
+      ],
+      "commitMessageTopic": "Helm chart {{depName}}",
+      "semanticCommitScope": "charts",
+      "separateMinorPatch": true,
+      "ignoreDeprecated": true
+    },
+    {
+      "datasources": [
+        "docker"
+      ],
+      "commitMessageTopic": "Docker image {{depName}}",
+      "commitMessageExtra": "to {{#if isSingleVersion}}{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}",
+      "updateTypes": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "enabled": true
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "semanticCommitScope": "images",
+      "separateMinorPatch": true
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "commitMessagePrefix": "feat(images)!: ",
+      "labels": [
+        "renovate/image",
+        "dep/major"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "semanticCommitType": "feat",
+      "labels": [
+        "renovate/image",
+        "dep/minor"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "semanticCommitType": "fix",
+      "labels": [
+        "renovate/image",
+        "dep/patch"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "commitMessagePrefix": "feat(charts)!: ",
+      "labels": [
+        "renovate/helm",
+        "dep/major"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "semanticCommitType": "feat",
+      "labels": [
+        "renovate/helm",
+        "dep/minor"
+      ]
+    },
+    {
+      "matchDatasources": [
+        "helm"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "semanticCommitType": "fix",
+      "labels": [
+        "renovate/helm",
+        "dep/patch"
+      ]
+    }
+  ]
+}
