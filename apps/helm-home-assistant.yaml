@@ -55,7 +55,7 @@ spec:
         persistence:
           config:
             enabled: true
-            storageClass: "home-assistant"
+            storageClass: "longhorn"
             accessMode: ReadWriteOnce
             size: "5Gi"
         addons:
@@ -104,7 +104,7 @@ spec:
           primary:
             persistence:
               enabled: true
-              storageClass: "home-assistant"
+              storageClass: "longhorn"
               size: 1Gi
               mountPath: "/data/"
 
