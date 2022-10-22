@@ -24,7 +24,6 @@ zigbee2mqtt:
       enabled: true
       accessMode: ReadWriteOnce
       size: 100Mi
-      storageClassName: longhorn
     usb:
       enabled: true
       type: hostPath
