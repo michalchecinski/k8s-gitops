@@ -44,27 +44,6 @@ spec:
               mountPath: /run/udev
             - name: ttyacm
               mountPath: /dev/ttyACM0
-          livenessProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 0
-            failureThreshold: 3
-            timeoutSeconds: 1
-            periodSeconds: 10
-          readinessProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 0
-            failureThreshold: 3
-            timeoutSeconds: 1
-            periodSeconds: 10
-          startupProbe:
-            tcpSocket:
-              port: 8080
-            initialDelaySeconds: 0
-            failureThreshold: 30
-            timeoutSeconds: 1
-            periodSeconds: 5
       volumes:
         - name: zigbee2mqtt-data
           persistentVolumeClaim:
