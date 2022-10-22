@@ -21,8 +21,8 @@ spec:
           tag: 2022.10.3
         env:
           TZ: "Europe/Warsaw"
-        # hostNetwork: true
-        # dnsPolicy: ClusterFirstWithHostNet
+        hostNetwork: true
+        dnsPolicy: ClusterFirstWithHostNet
         service:
           main:
             type: ClusterIP
