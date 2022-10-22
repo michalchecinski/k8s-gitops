@@ -10,7 +10,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: zigbee2mqtt
-      app.kubernetes.io/instance: release-name
   template:
     metadata:
       labels:
