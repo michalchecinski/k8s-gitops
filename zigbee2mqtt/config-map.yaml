@@ -15,12 +15,10 @@ data:
       - console
       - file
       network_key: GENERATE
-    devices: /data/devices.yaml
     experimental:
       new_api: true
     frontend:
       port: 8080
-    groups: /data/groups.yaml
     homeassistant: true
     mqtt:
       base_topic: zigbee2mqtt
