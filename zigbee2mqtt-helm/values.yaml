@@ -1,10 +1,13 @@
 zigbee2mqtt:
+  controller:
+    annotations:
+      reloader.stakater.com/auto: "true"
   config:
     homeassistant: true
     permit_join: true
     mqtt:
       base_topic: zigbee2mqtt
-      server: "mqtt://mosquitto.hass"
+      server: "mqtt://mosquitto.hass.svc.cluster.local"
     serial:
       port: "/dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_2e8bb2320645ec11b0fc96fd6f14af06-if00-port0"
     frontend:
