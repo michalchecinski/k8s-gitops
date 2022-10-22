@@ -1,0 +1,38 @@
+zigbee2mqtt:
+  config:
+    homeassistant: true
+    permit_join: true
+    mqtt:
+      base_topic: zigbee2mqtt
+      server: "mqtt://mosquitto.hass"
+    serial:
+      port: "/dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_2e8bb2320645ec11b0fc96fd6f14af06-if00-port0"
+    frontend:
+      port: 8080
+    advanced:
+      network_key: GENERATE
+      log_level: debug
+      log_output:
+      - console
+      - file
+
+  securityContext:
+    privileged: true
+
+  persistence:
+    data:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 100Mi
+      storageClassName: longhorn
+    usb:
+      enabled: true
+      type: hostPath
+      hostPath: /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_2e8bb2320645ec11b0fc96fd6f14af06-if00-port0
+  # ingress:
+  #   enabled: true
+  #   hosts:
+  #     - host: zigbee2-dashboard.apps.doofnet.uk
+  #       paths:
+  #         - path: /
+  #           pathType: Prefix
