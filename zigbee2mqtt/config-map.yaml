@@ -1,38 +1,31 @@
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: zigbee2mqtt-config
-  namespace: hass
+  name: zigbee2mqtt-settings
   labels:
-    app: zigbee2mqtt
+    app.kubernetes.io/name: zigbee2mqtt
 data:
-  configuration.yaml: |-
-
-    # Let new devices join our zigbee network
-    permit_join: true
-    # Home Assistant integration (MQTT discovery)
-    homeassistant: true
-    # Docker-Compose makes the MQTT-Server available using "mqtt" hostname
-    # MQTT server URL
-    mqtt:
-      base_topic: zigbee2mqtt
-      server: "mqtt://mosquitto.hass" # mqtt://<name_of_pod>.<name_of_namespace> (mosquitto)
-    # Zigbee Adapter path
-    serial:
-      port: /dev/ttyACM0
-    # Enable the Zigbee2MQTT frontend
-    frontend:
-      port: 8080
-    # Let Zigbee2MQTT generate a new network key on first start
+  configuration.yaml: |
     advanced:
-      #network_key: GENERATE
-      #log_output: ["console"]
+      homeassistant_discovery_topic: homeassistant
+      homeassistant_status_topic: homeassistant/status
+      last_seen: ISO_8601
       log_level: debug
       log_output:
       - console
       - file
-
-    ## Map devices to persistent /data directory
+      network_key: GENERATE
     devices: /data/devices.yaml
+    experimental:
+      new_api: true
+    frontend:
+      port: 8080
     groups: /data/groups.yaml
+    homeassistant: true
+    mqtt:
+      base_topic: zigbee2mqtt
+      include_device_information: true
+      server: mqtt://mosquitto.hass
+    permit_join: true
+    serial:
+      port: /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_2e8bb2320645ec11b0fc96fd6f14af06-if00-port0

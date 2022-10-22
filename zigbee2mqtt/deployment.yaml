@@ -1,49 +1,46 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
-  labels:
-    app: zigbee2mqtt
   name: zigbee2mqtt
 spec:
+  revisionHistoryLimit: 3
   replicas: 1
-  selector:
-    matchLabels:
-      app: zigbee2mqtt
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: zigbee2mqtt
+      app.kubernetes.io/instance: release-name
   template:
     metadata:
-      creationTimestamp: null
       labels:
-        app: zigbee2mqtt
+        app.kubernetes.io/name: zigbee2mqtt
     spec:
+      serviceAccountName: default
+      automountServiceAccountToken: true
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: true
       containers:
         - name: zigbee2mqtt
-          image: koenkk/zigbee2mqtt:latest-dev
+          image: "koenkk/zigbee2mqtt:1.19.1"
           imagePullPolicy: IfNotPresent
-          env:
-            - name: TZ
-              value: Europe/Warsaw
-            - name: "ZIGBEE2MQTT_DATA"
-              value: "/data"
           securityContext:
             privileged: true
+          env:
+            - name: ZIGBEE2MQTT_DATA
+              value: /data
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
           volumeMounts:
-            - name: zigbee2mqtt-data
+            - name: data
               mountPath: /data
-            - name: zigbee2mqtt-config
+            - name: usb
+              mountPath: /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_2e8bb2320645ec11b0fc96fd6f14af06-if00-port0
+            - name: zigbee2mqtt-settings
               mountPath: /app/configuration.yaml
               subPath: configuration.yaml
-            - name: zigbee2mqtt-udev
-              mountPath: /run/udev
-            - name: ttyacm
-              mountPath: /dev/ttyACM0
           livenessProbe:
             tcpSocket:
               port: 8080
@@ -66,15 +63,12 @@ spec:
             timeoutSeconds: 1
             periodSeconds: 5
       volumes:
-        - name: zigbee2mqtt-data
+        - name: data
           persistentVolumeClaim:
             claimName: zigbee2mqtt-data
-        - name: zigbee2mqtt-udev
-          hostPath:
-            path: /run/udev
-        - name: ttyacm
+        - name: usb
           hostPath:
             path: /dev/serial/by-id/usb-ITead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_2e8bb2320645ec11b0fc96fd6f14af06-if00-port0
-        - name: zigbee2mqtt-config
+        - name: zigbee2mqtt-settings
           configMap:
-            name: zigbee2mqtt-config
+            name: zigbee2mqtt-settings
