@@ -1,0 +1,8 @@
+mosquitto:
+  controller:
+    annotations:
+      reloader.stakater.com/auto: "true"
+persistence:
+  data:
+    enabled: true
+    mountPath: /mosquitto/data
