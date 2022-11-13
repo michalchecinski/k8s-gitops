@@ -31,9 +31,7 @@ spec:
             enabled: true
             annotations:
               cert-manager.io/cluster-issuer: letsencrypt
-              kubernetes.io/ingress.class: traefik
-              traefik.ingress.kubernetes.io/router.entrypoints: websecure
-              traefik.ingress.kubernetes.io/router.tls: "true"
+              kubernetes.io/ingress.class: nginx
               kubernetes.io/tls-acme: 'true'
             hosts:
             - host: hass-k8s.checinski.xyz
@@ -76,9 +74,7 @@ spec:
               enabled: true
               annotations:
                 cert-manager.io/cluster-issuer: letsencrypt
-                kubernetes.io/ingress.class: traefik
-                traefik.ingress.kubernetes.io/router.entrypoints: websecure
-                traefik.ingress.kubernetes.io/router.tls: "true"
+                kubernetes.io/ingress.class: nginx
                 kubernetes.io/tls-acme: 'true'
               hosts:
               - host: hass-vscode.checinski.xyz
