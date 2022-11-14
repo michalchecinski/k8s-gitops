@@ -34,14 +34,14 @@ spec:
               kubernetes.io/ingress.class: nginx
               kubernetes.io/tls-acme: 'true'
             hosts:
-            - host: hass-k8s.checinski.xyz
+            - host: hass.checinski.xyz
               paths:
               - path: /
                 pathType: Prefix
             tls:
             - hosts:
-              - "hass-k8s.checinski.xyz"
-              secretName: hass-k8s-checinski-xyz-tls
+              - "hass.checinski.xyz"
+              secretName: hass-checinski-xyz-tls
         prometheus:
           serviceMonitor:
             enabled: false
