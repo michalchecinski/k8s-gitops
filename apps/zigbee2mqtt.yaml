@@ -13,7 +13,7 @@ spec:
     server: "https://kubernetes.default.svc"
   source:
     repoURL: 'https://github.com/michalchecinski/k8s-gitops.git'
-    path: zigbee2mqtt-helm
+    path: zigbee2mqtt
     targetRevision: master
   project: default
   syncPolicy:
