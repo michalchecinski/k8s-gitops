@@ -1,0 +1,20 @@
+ingress:
+  enabled: true
+  # annotations:
+  #   kubernetes.io/ingress.class: nginx
+  path: /oauth2
+  hosts: [auth.checinski.xyz]
+  tls:
+  - hosts:
+    - auth.checinski.xyz
+extraArgs:
+  provider: oidc
+  oidc-issuer-url: https://michalchecinski.eu.auth0.com/
+  skip-provider-button:
+  pass-authorization-header:
+  email-domain: "*"
+  cookie-domain: .checinski.xyz
+  whitelist-domain: .checinski.xyz
+
+config:
+  existingSecret: oauth2-proxy-secret
