@@ -79,35 +79,27 @@
         "eclipse-mosquitto"
       ]
     },
+    // Datasources
     {
-      "datasources": [
-        "helm"
-      ],
+      "datasources": ["helm"],
       "commitMessageTopic": "Helm chart {{depName}}",
       "semanticCommitScope": "charts",
       "separateMinorPatch": true,
       "ignoreDeprecated": true
     },
     {
-      "datasources": [
-        "docker"
-      ],
+      "datasources": ["docker"],
       "commitMessageTopic": "Docker image {{depName}}",
       "commitMessageExtra": "to {{#if isSingleVersion}}{{{toVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "updateTypes": [
-        "major",
-        "minor",
-        "patch"
-      ],
+      "updateTypes": ["major", "minor", "patch"],
       "enabled": true
     },
     {
-      "matchDatasources": [
-        "docker"
-      ],
+      "matchDatasources": ["docker"],
       "semanticCommitScope": "images",
       "separateMinorPatch": true
     },
+    // Labels
     {
       "matchDatasources": [
         "docker"
