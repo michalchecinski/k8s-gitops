@@ -15,4 +15,4 @@ appVersion: 0.112.0
 dependencies:
 - name: n8n
   version: 0.6.0
-  repository: https://github.com/8gears/n8n-helm-chart
+  repository: https://8gears.container-registry.com/chartrepo/library
