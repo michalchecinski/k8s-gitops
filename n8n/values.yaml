@@ -1,0 +1,34 @@
+persistence:
+  enabled: true
+  type: emptyDir # what type volume, possible options are [existing, emptyDir, dynamic] dynamic for Dynamic Volume Provisioning, existing for using an existing Claim
+  storageClass: "longhorn"
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+
+# Set additional environment variables on the Deployment
+extraEnv:
+# Set this if running behind a reverse proxy and the external port is different from the port n8n runs on
+  WEBHOOK_TUNNEL_URL: "https://n8n.checinski.xyz/"
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: 'true'
+  hosts:
+    - host: n8n.checinski.xyz
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+   - secretName: n8n-checinski-xyz-tls
+     hosts:
+       - n8n.checinski.xyz
