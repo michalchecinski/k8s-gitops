@@ -1,0 +1,30 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: esphome-ingress
+  labels:
+    app: esphome
+    component: ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: 'true'
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.checinski.xyz/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: https://auth.checinski.xyz/oauth2/start
+spec:
+  tls:
+    - hosts:
+        - esphome.checinski.xyz
+      secretName: esphome-checinski-xyz-tls
+  rules:
+    - host: esphome.checinski.xyz
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: esphome
+                port:
+                  number: 80
