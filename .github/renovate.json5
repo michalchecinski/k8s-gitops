@@ -68,11 +68,27 @@
       "requiredStatusChecks": null,
       "schedule": "after 1am and before 5am",
       "updateTypes": [
+        "major",
         "minor",
         "patch"
       ],
       "packageNames": [
-        "homeassistant/home-assistant",
+        "homeassistant/home-assistant"
+      ]
+    },
+    {
+      "datasources": [
+        "docker"
+      ],
+      "automerge": true,
+      "automergeType": "branch",
+      "requiredStatusChecks": null,
+      "schedule": "after 1am and before 5am",
+      "updateTypes": [
+        "minor",
+        "patch"
+      ],
+      "packageNames": [
         "koenkk/zigbee2mqtt",
         "esphome/esphome",
         "eclipse-mosquitto"
