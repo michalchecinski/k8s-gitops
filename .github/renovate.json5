@@ -44,7 +44,6 @@
       "\\.yaml$"
     ],
     "ignorePaths": [
-      "apps/",
       ".github"
     ]
   },
@@ -80,7 +79,7 @@
       ]
     },
     // Datasources
-    {
+        {
       "datasources": ["helm"],
       "commitMessageTopic": "Helm chart {{depName}}",
       "semanticCommitScope": "charts",
