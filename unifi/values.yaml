@@ -20,6 +20,9 @@ unifi:
         cert-manager.io/cluster-issuer: letsencrypt
         kubernetes.io/ingress.class: nginx
         kubernetes.io/tls-acme: 'true'
+        flame.pawelmalak/type: application
+        flame.pawelmalak/name: unifi
+        flame.pawelmalak/url: https://unifi.checinski.xyz
 
       ingressClassName: "nginx"
 
