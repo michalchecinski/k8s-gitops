@@ -24,8 +24,7 @@ unifi:
       ingressClassName: "nginx"
 
       hosts:
-        -  ## Host address. Helm template can be passed.
-          host:
+        - host:
             - unifi.checinski.xyz
           paths:
             -
