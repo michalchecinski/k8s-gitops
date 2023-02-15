@@ -30,8 +30,7 @@ unifi:
         - host: unifi.checinski.xyz
           http:
             paths:
-              -
-                path: /
+              - path: /
                 pathType: Prefix
                 service:
                   name: main
