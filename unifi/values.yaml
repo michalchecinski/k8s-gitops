@@ -12,14 +12,6 @@ unifi:
         cert-manager.io/cluster-issuer: letsencrypt
         kubernetes.io/ingress.class: nginx
         kubernetes.io/tls-acme: 'true'
-
-    portal:
-      enabled: true
-      annotations:
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        cert-manager.io/cluster-issuer: letsencrypt
-        kubernetes.io/ingress.class: nginx
-        kubernetes.io/tls-acme: 'true'
         flame.pawelmalak/type: application
         flame.pawelmalak/name: unifi
         flame.pawelmalak/url: https://unifi.checinski.xyz
@@ -32,9 +24,10 @@ unifi:
             paths:
               - path: /
                 pathType: Prefix
-                service:
-                  name: main
-                  port: portal-https
+      tls:
+        - hosts:
+            - "unifi.checinski.xyz"
+          secretName: unifi-checinski-xyz-tls
 
   persistence:
     config:
