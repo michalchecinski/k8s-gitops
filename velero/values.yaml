@@ -7,7 +7,7 @@ velero:
       config:
         region: eu-central-003
         s3ForcePathStyle: true
-        # s3Url: http://truenas.home:9000
+        s3Url: https://s3.eu-central-003.backblazeb2.com
         # publicUrl: https://minio.eviljungle.com
     volumeSnapshotLocation:
       name: aws
