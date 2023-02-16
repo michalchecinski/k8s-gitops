@@ -1,0 +1,33 @@
+velero:
+  configuration:
+    provider: aws
+    backupStorageLocation:
+      name: default
+      bucket: mch-velero
+      config:
+        region: eu-central-003
+        s3ForcePathStyle: true
+        # s3Url: http://truenas.home:9000
+        # publicUrl: https://minio.eviljungle.com
+    volumeSnapshotLocation:
+      name: aws
+      config:
+        region: eu-central-003
+    resticTimeout: 6h
+  credentials:
+    existingSecret: backblaze-secret
+  initContainers:
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws:v1.6.1@sha256:39734038bcdffd50a050bac004deef2578a29c756de330e70566279152d6d5b1
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - mountPath: /target
+      name: plugins
+  snapshotsEnabled: true
+  deployNodeAgent: true
+  upgradeCRDs: false
+  schedules:
+    daily-backup:
+      schedule: "0 6 * * *"
+      template:
+        ttl: "120h"
