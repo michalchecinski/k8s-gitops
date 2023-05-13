@@ -2,14 +2,14 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: volsync
-  namespace: volsync
+  namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   annotations:
     argocd.argoproj.io/sync-wave: "4"
 spec:
   destination:
-    namespace: hass
+    namespace: volsync
     server: "https://kubernetes.default.svc"
   source:
     repoURL: 'https://github.com/michalchecinski/k8s-gitops.git'
