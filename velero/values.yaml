@@ -18,7 +18,7 @@ velero:
     existingSecret: backblaze-secret
   initContainers:
   - name: velero-plugin-for-aws
-    image: velero/velero-plugin-for-aws:v1.6.1@sha256:39734038bcdffd50a050bac004deef2578a29c756de330e70566279152d6d5b1
+    image: velero/velero-plugin-for-aws:v1.6.2@sha256:9467b0bb44ce10e1a338e3a6f11868d7e6f619d55606012933b016d4c3a9aa26
     imagePullPolicy: IfNotPresent
     volumeMounts:
     - mountPath: /target
