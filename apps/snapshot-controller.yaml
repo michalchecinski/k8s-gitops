@@ -22,8 +22,8 @@ spec:
             annotations:
               snapshot.storage.kubernetes.io/is-default-class: "true"
             deletionPolicy: Delete
-      serviceMonitor:
-        create: true
+        serviceMonitor:
+          create: true
 
   destination:
     server: "https://kubernetes.default.svc"
