@@ -9,9 +9,9 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
-  sources:
+  source:
     - repoURL: 'https://github.com/michalchecinski/k8s-gitops.git'
-      path: n8n/overlays/main
+      path: home-assistant
       targetRevision: master
     - chart: home-assistant
       repoURL: https://k8s-at-home.com/charts/
