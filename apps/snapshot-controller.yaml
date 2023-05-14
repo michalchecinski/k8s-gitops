@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: snapshot-controller
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: default
+  source:
+    chart: snapshot-controller
+    repoURL: https://piraeus.io/helm-charts/
+    targetRevision: 1.7.2
+    helm:
+      releaseName: snapshot-controller
+      values: |
+        volumeSnapshotClasses:
+          - name: csi-rbdplugin-snapclass
+            driver: driver.longhorn.io
+            annotations:
+              snapshot.storage.kubernetes.io/is-default-class: "true"
+            deletionPolicy: Delete
+      serviceMonitor:
+        create: true
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: snapshot
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
