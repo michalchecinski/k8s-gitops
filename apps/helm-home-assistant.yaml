@@ -9,7 +9,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   project: default
-  source:
+  sources:
     - repoURL: 'https://github.com/michalchecinski/k8s-gitops.git'
       path: home-assistant
       targetRevision: master
