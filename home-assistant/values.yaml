@@ -1,0 +1,101 @@
+home-assistant:
+  image:
+    repository: homeassistant/home-assistant
+    tag: 2023.3.1
+  env:
+    TZ: "Europe/Warsaw"
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
+  service:
+    main:
+      type: ClusterIP
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: letsencrypt
+        kubernetes.io/ingress.class: nginx
+        kubernetes.io/tls-acme: 'true'
+        flame.pawelmalak/type: application
+        flame.pawelmalak/name: home-assistant
+        flame.pawelmalak/url: https://hass.checinski.xyz
+      hosts:
+      - host: hass.checinski.xyz
+        paths:
+        - path: /
+          pathType: Prefix
+      tls:
+      - hosts:
+        - "hass.checinski.xyz"
+        secretName: hass-checinski-xyz-tls
+  prometheus:
+    serviceMonitor:
+      enabled: false
+  probes:
+    liveness:
+      enabled: false
+    readiness:
+      enabled: false
+    startup:
+      enabled: true
+  persistence:
+    config:
+      enabled: true
+      storageClass: "longhorn"
+      accessMode: ReadWriteOnce
+      size: "5Gi"
+  addons:
+    codeserver:
+      enabled: true
+      image:
+        repository: codercom/code-server
+        tag: 4.7.1
+      workingDir: "/config"
+      args:
+        - --user-data-dir
+        - "/config/.vscode"
+        - --auth
+        - "none"
+      ingress:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt
+          kubernetes.io/ingress.class: nginx
+          kubernetes.io/tls-acme: 'true'
+          nginx.ingress.kubernetes.io/auth-url: "https://auth.checinski.xyz/oauth2/auth"
+          nginx.ingress.kubernetes.io/auth-signin: https://auth.checinski.xyz/oauth2/start
+          flame.pawelmalak/type: application
+          flame.pawelmalak/name: hass-vscode
+          flame.pawelmalak/url: https://hass-vscode.checinski.xyz
+        hosts:
+        - host: hass-vscode.checinski.xyz
+          paths:
+          - path: /
+            pathType: Prefix
+        tls:
+        - hosts:
+          - hass-vscode.checinski.xyz
+          secretName: hass-vscode-checinski-xyz-tls
+      volumeMounts:
+      - name: config
+        mountPath: /config
+  postgresql:
+    enabled: true
+    image:
+      repository: postgres
+      tag: '14.1'
+    auth:
+      enablePostgresUser: false
+      username: home-assistant
+      database: home-assistant
+    postgresqlDataDir: "/data/pgdata"
+    shmVolume:
+      enabled: false
+    volumePermissions:
+      enabled: false
+    primary:
+      persistence:
+        enabled: true
+        storageClass: "longhorn"
+        size: 1Gi
+        mountPath: "/data/"
