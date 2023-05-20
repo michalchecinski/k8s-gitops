@@ -1,4 +1,4 @@
 resources:
   - ../../base
-  - restic-secret-sealed.yaml
+  - restic-secret-sealed.json
   - volsync.yaml
