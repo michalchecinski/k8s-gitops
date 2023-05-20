@@ -49,7 +49,7 @@ home-assistant:
       enabled: true
       image:
         repository: codercom/code-server
-        tag: 4.7.1
+        tag: 4.13.0
       workingDir: "/config"
       args:
         - --user-data-dir
@@ -83,7 +83,7 @@ home-assistant:
     enabled: true
     image:
       repository: postgres
-      tag: '14.1'
+      tag: '14.8'
     auth:
       enablePostgresUser: false
       username: home-assistant
