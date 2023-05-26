@@ -41,8 +41,6 @@ homepage:
   ingress:
     main:
       enabled: true
-      labels:
-        gethomepage.dev/enabled: "true"
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt
         kubernetes.io/ingress.class: nginx
