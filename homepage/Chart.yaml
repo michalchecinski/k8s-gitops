@@ -1,0 +1,12 @@
+apiVersion: v2
+name: homepage
+type: application
+
+version: 0.1.0
+
+appVersion: v0.6.10
+
+dependencies:
+- name: homepage
+  version: 1.2.0
+  repository: http://jameswynn.github.io/helm-charts

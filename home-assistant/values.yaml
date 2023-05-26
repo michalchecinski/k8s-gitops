@@ -12,13 +12,14 @@ home-assistant:
   ingress:
     main:
       enabled: true
+      labels:
+        gethomepage.dev/enabled: "true"
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt
         kubernetes.io/ingress.class: nginx
         kubernetes.io/tls-acme: 'true'
-        flame.pawelmalak/type: application
-        flame.pawelmalak/name: home-assistant
-        flame.pawelmalak/url: https://hass.checinski.xyz
+        gethomepage.dev/name: home-assistant
+        gethomepage.dev/group: hass
       hosts:
       - host: hass.checinski.xyz
         paths:
@@ -58,15 +59,16 @@ home-assistant:
         - "none"
       ingress:
         enabled: true
+        labels:
+          gethomepage.dev/enabled: "true"
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt
           kubernetes.io/ingress.class: nginx
           kubernetes.io/tls-acme: 'true'
           nginx.ingress.kubernetes.io/auth-url: "https://auth.checinski.xyz/oauth2/auth"
           nginx.ingress.kubernetes.io/auth-signin: https://auth.checinski.xyz/oauth2/start
-          flame.pawelmalak/type: application
-          flame.pawelmalak/name: hass-vscode
-          flame.pawelmalak/url: https://hass-vscode.checinski.xyz
+          gethomepage.dev/name: hass-vscode
+          gethomepage.dev/group: hass
         hosts:
         - host: hass-vscode.checinski.xyz
           paths:

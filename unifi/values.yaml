@@ -7,14 +7,15 @@ unifi:
   ingress:
     main:
       enabled: true
+      labels:
+        gethomepage.dev/enabled: "true"
       annotations:
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         cert-manager.io/cluster-issuer: letsencrypt
         kubernetes.io/ingress.class: nginx
         kubernetes.io/tls-acme: 'true'
-        flame.pawelmalak/type: application
-        flame.pawelmalak/name: unifi
-        flame.pawelmalak/url: https://unifi.checinski.xyz
+        gethomepage.dev/name: unifi
+        gethomepage.dev/group: network
 
       ingressClassName: "nginx"
 

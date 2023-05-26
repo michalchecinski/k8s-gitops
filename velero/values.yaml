@@ -3,12 +3,11 @@ velero:
     provider: aws
     backupStorageLocation:
       name: default
-      bucket: mch-velero
+      bucket: velero-k8s-mch-backup
       config:
         region: eu-central-003
         s3ForcePathStyle: true
         s3Url: https://s3.eu-central-003.backblazeb2.com
-        # publicUrl: https://minio.eviljungle.com
     volumeSnapshotLocation:
       name: aws
       config:
@@ -25,7 +24,7 @@ velero:
       name: plugins
   snapshotsEnabled: true
   deployNodeAgent: true
-  upgradeCRDs: false
+  upgradeCRDs: true
   schedules:
     daily-backup:
       schedule: "0 6 * * *"

@@ -6,15 +6,16 @@ metadata:
   labels:
     app: zigbee2mqtt
     component: ingress
+  labels:
+    gethomepage.dev/enabled: "true"
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: 'true'
     nginx.ingress.kubernetes.io/auth-url: "https://auth.checinski.xyz/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: https://auth.checinski.xyz/oauth2/start
-    flame.pawelmalak/type: application
-    flame.pawelmalak/name: zigbee2mqtt
-    flame.pawelmalak/url: https://zigbee2mqtt.checinski.xyz
+    gethomepage.dev/name: zigbee2mqtt
+    gethomepage.dev/group: hass
 spec:
   tls:
     - hosts:
