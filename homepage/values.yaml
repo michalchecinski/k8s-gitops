@@ -3,12 +3,12 @@ homepage:
   serviceAccount:
     create: true
   config:
-    # bookmarks:
+    bookmarks:
     #   - Developer:
     #       - Github:
     #           - abbr: GH
     #             href: https://github.com/
-    # services:
+    services:
     #   - My First Group:
     #       - My First Service:
     #           href: http://localhost/
