@@ -6,8 +6,6 @@ metadata:
   labels:
     app: zigbee2mqtt
     component: ingress
-  labels:
-    gethomepage.dev/enabled: "true"
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/ingress.class: nginx
@@ -16,6 +14,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-signin: https://auth.checinski.xyz/oauth2/start
     gethomepage.dev/name: zigbee2mqtt
     gethomepage.dev/group: hass
+    gethomepage.dev/enabled: "true"
 spec:
   tls:
     - hosts:

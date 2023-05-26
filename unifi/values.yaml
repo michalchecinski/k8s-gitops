@@ -7,8 +7,6 @@ unifi:
   ingress:
     main:
       enabled: true
-      labels:
-        gethomepage.dev/enabled: "true"
       annotations:
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         cert-manager.io/cluster-issuer: letsencrypt
@@ -16,6 +14,7 @@ unifi:
         kubernetes.io/tls-acme: 'true'
         gethomepage.dev/name: unifi
         gethomepage.dev/group: network
+        gethomepage.dev/enabled: "true"
 
       ingressClassName: "nginx"
 

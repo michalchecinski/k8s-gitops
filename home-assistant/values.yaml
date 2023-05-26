@@ -12,14 +12,13 @@ home-assistant:
   ingress:
     main:
       enabled: true
-      labels:
-        gethomepage.dev/enabled: "true"
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt
         kubernetes.io/ingress.class: nginx
         kubernetes.io/tls-acme: 'true'
         gethomepage.dev/name: home-assistant
         gethomepage.dev/group: hass
+        gethomepage.dev/enabled: "true"
       hosts:
       - host: hass.checinski.xyz
         paths:
@@ -59,8 +58,6 @@ home-assistant:
         - "none"
       ingress:
         enabled: true
-        labels:
-          gethomepage.dev/enabled: "true"
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt
           kubernetes.io/ingress.class: nginx
@@ -69,6 +66,7 @@ home-assistant:
           nginx.ingress.kubernetes.io/auth-signin: https://auth.checinski.xyz/oauth2/start
           gethomepage.dev/name: hass-vscode
           gethomepage.dev/group: hass
+          gethomepage.dev/enabled: "true"
         hosts:
         - host: hass-vscode.checinski.xyz
           paths:

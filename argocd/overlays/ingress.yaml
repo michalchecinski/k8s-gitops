@@ -3,14 +3,13 @@ kind: Ingress
 metadata:
   name: argocd-ingress
   namespace: argocd
-  labels:
-    gethomepage.dev/enabled: "true"
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: 'true'
     gethomepage.dev/name: argocd
     gethomepage.dev/group: cluster
+    gethomepage.dev/enabled: "true"
 spec:
   rules:
   - http:

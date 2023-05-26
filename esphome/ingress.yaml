@@ -6,7 +6,6 @@ metadata:
   labels:
     app: esphome
     component: ingress
-    gethomepage.dev/enabled: "true"
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     kubernetes.io/ingress.class: nginx
@@ -14,6 +13,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: "https://auth.checinski.xyz/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: https://auth.checinski.xyz/oauth2/start
     gethomepage.dev/name: esphome
+    gethomepage.dev/enabled: "true"
 spec:
   tls:
     - hosts:

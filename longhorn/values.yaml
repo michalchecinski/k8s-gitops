@@ -14,8 +14,6 @@ ingress:
   secureBackends: true
   tlsSecret: longhorn-checinski-xyz-tls
   path: /
-  labels:
-    gethomepage.dev/enabled: "true"
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     cert-manager.io/cluster-issuer: letsencrypt
@@ -23,6 +21,7 @@ ingress:
     kubernetes.io/tls-acme: 'true'
     nginx.ingress.kubernetes.io/auth-url: "https://auth.checinski.xyz/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: https://auth.checinski.xyz/oauth2/start
+    gethomepage.dev/enabled: "true"
     gethomepage.dev/name: longhorn
     gethomepage.dev/group: cluster
   secrets:
