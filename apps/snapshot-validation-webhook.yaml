@@ -12,7 +12,7 @@ spec:
   source:
     chart: snapshot-validation-webhook
     repoURL: https://piraeus.io/helm-charts/
-    targetRevision: 1.7.1
+    targetRevision: 1.7.2
     helm:
       releaseName: snapshot-validation-webhook
 
