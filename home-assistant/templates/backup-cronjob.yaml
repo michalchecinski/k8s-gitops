@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  namespace: hass
+  name: homeassistant-backup-b2
+spec:
+  schedule: "20 01 * * *"
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 0
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: rclone
+            image: rclone/rclone:1.62
+            env:
+            - name: TZ
+              value: "Europe/Warsaw"
+            command:
+            - "rclone"
+            args:
+            - "-v"
+            - "--config"
+            - "/config/rclone.conf"
+            - "sync"
+            - "--ignore-errors"
+            - "--fast-list"
+            - "/home"
+            - "remote:arsen-kubernetes/homeassistant"
+            volumeMounts:
+            - name: rclone-config
+              mountPath: "/config"
+            - name: nfs-backup-ro-homeassistant
+              mountPath: /home
+          volumes:
+          - name: rclone-config
+            secret:
+              secretName: homeassistant-backup-rclone-config-secret
+          - name: nfs-backup-ro-homeassistant
+            persistentVolumeClaim:
+              claimName: home-assistant-config
