@@ -29,7 +29,7 @@ spec:
             - "--ignore-errors"
             - "--fast-list"
             - "/home"
-            - "remote:arsen-kubernetes/homeassistant"
+            - "remote:rclone-k8s-mch-backup/homeassistant"
             volumeMounts:
             - name: rclone-config
               mountPath: "/config"
