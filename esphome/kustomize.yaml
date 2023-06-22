@@ -1,3 +1,4 @@
+namespace: hass
 resources:
 - pvc.yaml
 - deployment.yaml

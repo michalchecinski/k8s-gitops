@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: esphome-backup-b2
+spec:
+  schedule: "21 01 * * *"
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 0
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: rclone
+            image: rclone/rclone:1.62
+            env:
+            - name: TZ
+              value: "Europe/Warsaw"
+            command:
+            - "rclone"
+            args:
+            - "-v"
+            - "--config"
+            - "/config/rclone.conf"
+            - "sync"
+            - "--ignore-errors"
+            - "--fast-list"
+            - "/home"
+            - "b2:rclone-k8s-mch-backup/esphome"
+            volumeMounts:
+            - name: rclone-config
+              mountPath: "/config"
+            - name: nfs-backup-ro-esphome
+              mountPath: /home
+          volumes:
+          - name: rclone-config
+            secret:
+              secretName: esphome-backup-rclone-config-secret
+          - name: nfs-backup-ro-esphome
+            persistentVolumeClaim:
+              claimName: esphome-data

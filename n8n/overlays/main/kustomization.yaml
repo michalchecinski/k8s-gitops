@@ -1,4 +1,4 @@
 resources:
   - ../../base
-  - restic-secret-sealed.json
-  - volsync.yaml
+  - backup-rclone-config-secret.json
+  - backup-cronjob.yaml
