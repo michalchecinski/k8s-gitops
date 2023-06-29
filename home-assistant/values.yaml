@@ -83,7 +83,7 @@ home-assistant:
     enabled: true
     image:
       repository: postgres
-      tag: '15.3'
+      tag: '14.8'
     auth:
       enablePostgresUser: false
       username: home-assistant
