@@ -42,7 +42,7 @@ home-assistant:
     config:
       enabled: true
       storageClass: "longhorn"
-      accessMode: ReadWriteOnce
+      accessMode: ReadWriteMany
       size: "5Gi"
   addons:
     codeserver:

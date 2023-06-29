@@ -79,7 +79,7 @@ metadata:
   name: n8n-data
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   volumeMode: Filesystem
   resources:
     requests:
