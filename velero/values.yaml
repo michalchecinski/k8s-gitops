@@ -1,0 +1,33 @@
+initContainers:
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws:v1.4.1
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
+configuration:
+  provider: aws
+  backupStorageLocation:
+    name: "aws"
+    provider: "velero.io/aws"
+    bucket: BUCKET_NAME    # Replace with bucket name you created above
+    default: true
+    config:
+      region: AWS_REGION    # Region where your bucket is located
+  volumeSnapshotLocation:
+    name: aws
+    provider: velero.io/aws
+    config:
+      region: AWS_REGION    # Region where your volume(s) are located
+serviceAccount:
+  server:
+    create: true
+    name: velero
+    annotations:
+      eks.amazonaws.com/role-arn: IAM_ROLE_ARN    # ARN of IAM role created above
+schedules:
+  eks-cluster:
+    disabled: false
+    schedule: "0 0 * * *"  # CRON expression to periodically take backups
+    template:
+      ttl: "240h"  # This setting will delete backups automatically after 10 days
