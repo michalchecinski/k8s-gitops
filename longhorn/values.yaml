@@ -2,10 +2,6 @@ longhorn:
   persistence:
     defaultClassReplicaCount: 1
 
-  defaultSettings:
-    backupTarget: s3://mch-longhorn-backup@eu-central-003/
-    backupTargetCredentialSecret: backblaze-secret
-
 ingress:
   enabled: true
   ingressClassName: nginx
