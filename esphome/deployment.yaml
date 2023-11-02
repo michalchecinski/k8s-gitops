@@ -18,7 +18,7 @@ spec:
     spec:
       hostNetwork: true
       containers:
-        - image: esphome/esphome:2023.10.4
+        - image: esphome/esphome:2023.10.5
           name: esphome
           env:
             - name: ESPHOME_DASHBOARD_USE_PING
