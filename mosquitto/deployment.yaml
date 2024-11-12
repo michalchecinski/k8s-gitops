@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: mosquitto
-          image: eclipse-mosquitto:2.0.20@sha256:eb37f58646a901dc7727cf448cae36daaefaba79de33b5058dab79aa4c04aefb
+          image: eclipse-mosquitto:2.0.20@sha256:8b396cec28cd5e8e1a3aba1d9abdbddd42c454c80f703e77c1bec56e152fa54e
           imagePullPolicy: IfNotPresent
           ports:
             - name: default
